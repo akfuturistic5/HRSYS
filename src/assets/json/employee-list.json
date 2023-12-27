@@ -1,0 +1,58 @@
+[
+    {
+        "Image": "avatar-02.jpg",
+        "Name": "John Doe Web Designer",
+        "EmployeeID": "FT-0001",
+        "Email": "johndoe@example.com",
+        "Mobile": 9876543210,
+        "JoinDate": "1 Jan 2023"
+    },
+    {
+        "Image": "avatar-09.jpg",
+        "Name": "Richard Miles Web Developer",
+        "EmployeeID": "FT-0002",
+        "Email": "richardmiles@example.com",
+        "Mobile": 9876543210,
+        "JoinDate": "18 Mar 2014"
+    },
+    {
+        "Image": "avatar-10.jpg",
+        "Name": "John Smith Android Developer",
+        "EmployeeID": "FT-0003",
+        "Email": "johnsmith@example.com",
+        "Mobile": 9876543210,
+        "JoinDate": "1 Apr 2014"
+    },
+    {
+        "Image": "avatar-05.jpg",
+        "Name": "Mike Litorus IOS Developer",
+        "EmployeeID": "FT-0004",
+        "Email": "mikelitorus@example.com",
+        "Mobile": 9876543210,
+        "JoinDate": "1 Apr 2014"
+    },
+    {
+        "Image": "avatar-11.jpg",
+        "Name": "Wilmer Deluna Team Leader",
+        "EmployeeID": "FT-0005",
+        "Email": "wilmerdeluna@example.com",
+        "Mobile": 9876543210,
+        "JoinDate": "22 May 2014"
+    },
+    {
+        "Image": "avatar-12.jpg",
+        "Name": "Jeffrey Warden Web Developer",
+        "EmployeeID": "FT-0006",
+        "Email": "jeffreywarden@example.com",
+        "Mobile": 9876543210,
+        "JoinDate": "16 Jun 2023"
+    },
+    {
+        "Image": "avatar-13.jpg",
+        "Name": "Bernardo Galaviz Web Developer",
+        "EmployeeID": "FT-0007",
+        "Email": "bernardogalaviz@example.com",
+        "Mobile": 9876543210,
+        "JoinDate": "1 Jan 2023"
+    }
+]

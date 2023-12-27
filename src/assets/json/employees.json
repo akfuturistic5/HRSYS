@@ -1,0 +1,63 @@
+[
+    {      
+        "name": "John Doe",
+        "designation": "Web Designer",
+        "image": "avatar-02.jpg"
+    },
+    {      
+        "name": "Richard Miles",
+        "designation": "Web Developer",
+        "image": "avatar-09.jpg"
+    },
+    {      
+        "name": "John Smith",
+        "designation": "Android Developer",
+        "image": "avatar-10.jpg"
+    },
+    {
+        "name": "Mike Litorus",
+        "designation": "IOS Developer",
+        "image": "avatar-05.jpg"
+    },
+    {      
+        "name": "Wilmer Deluna",
+        "designation": "Team Leader",
+        "image": "avatar-11.jpg"
+    },
+    {      
+        "name": "Jeffrey Warden",
+        "designation": "Web Developer",
+        "image": "avatar-12.jpg"
+    },
+    {      
+        "name": "Bernardo Galaviz",
+        "designation": "Web Developer",
+        "image": "avatar-13.jpg"
+    },
+    {      
+        "name": "Lesley Grauer",
+        "designation": "Team Leader",
+        "image": "avatar-01.jpg"
+    },
+    {      
+        "name": "Jeffery Lalor",
+        "designation": "Team Leader",
+        "image": "avatar-16.jpg"
+    },
+    {      
+        "name": "Loren Gatlin",
+        "designation": "Android Developer",
+        "image": "avatar-04.jpg"
+    },
+    {      
+        "name": "Tarah Shropshire",
+        "designation": "Android Developer",
+        "image": "avatar-03.jpg"
+    },
+    {      
+        "name": "Catherine Manseau",
+        "designation": "Android Developer",
+        "image": "avatar-08.jpg"
+    }    
+]
+  

@@ -1,0 +1,56 @@
+[
+    {
+        "firstname": "Default",
+        "lastname": "Defaultson",
+        "email": "def@somemail.com",
+        "class":""
+    },
+    {
+        "firstname": "Primary",
+        "lastname": "Doe",
+        "email": "john@example.com",
+        "class":"table-primary"
+    },
+    {
+        "firstname": "Secondary",
+        "lastname": "Moe",
+        "email": "mary@example.com",
+        "class":"table-secondary"
+    },
+    {
+        "firstname": "Success",
+        "lastname": "Dooley",
+        "email": "july@example.com",
+        "class":"table-success"
+    },
+    {
+        "firstname": "Danger",
+        "lastname": "Refs",
+        "email": "bo@example.com",
+        "class":"table-danger"
+    },
+    {
+        "firstname": "Warning",
+        "lastname": "Activeson",
+        "email": "act@example.com",
+        "class":"table-warning"
+    },
+    {
+        "firstname": "Info",
+        "lastname": "Activeson",
+        "email": "act@example.com",
+        "class":"table-info"
+    },
+    {
+        "firstname": "Light",
+        "lastname": "Activeson",
+        "email": "act@example.com",
+        "class":"table-light"
+    },
+    {
+        "firstname": "Dark",
+        "lastname": "Activeson",
+        "email": "act@example.com",
+        "class":"table-dark"
+    }
+]

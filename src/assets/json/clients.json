@@ -1,0 +1,58 @@
+[
+    {
+        "id": 1,
+        "Image": "avatar-19.jpg",
+        "CompanyName": "Global Technologies",
+        "Name": "Barry Cuda",
+        "Role": "CEO"
+    },
+    {
+        "id": 2,
+        "Image": "avatar-29.jpg",
+        "CompanyName": "Delta Infotech",
+        "Name": "Tressa Wexler",
+        "Role": "Manager"
+    },
+    {
+        "id": 3,
+        "Image": "avatar-07.jpg",
+        "CompanyName": "Cream Inc",
+        "Name": "Ruby Bartlett",
+        "Role": "CEO"
+    },
+    {
+        "id": 4,
+        "Image": "avatar-06.jpg",
+        "CompanyName": "Wellware Company",
+        "Name": "Misty Tison",
+        "Role": "CEO"
+    },
+    {
+        "id": 5,
+        "Image": "avatar-14.jpg",
+        "CompanyName": "Mustang Technologies",
+        "Name": "Daniel Deacon",
+        "Role": "CEO"
+    },
+    {
+        "id": 6,
+        "Image": "avatar-18.jpg",
+        "CompanyName": "International Software Inc",
+        "Name": "Walter Weaver",
+        "Role": "CEO"
+    },
+    {
+        "id": 7,
+        "Image": "avatar-28.jpg",
+        "CompanyName": "Mercury Software Inc",
+        "Name": "Amanda Warren",
+        "Role": "CEO"
+    },
+    {
+        "id": 8,
+        "Image": "avatar-13.jpg",
+        "CompanyName": "Carlson Tech",
+        "Name": "Betty Carlson",
+        "Role": "CEO"
+    }
+]

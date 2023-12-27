@@ -1,0 +1,26 @@
+[
+    {
+        "Plan": "Free Trial",
+        "PlanType": "Yearly",
+        "CreateDate": "9 Nov 2023",
+        "ModifiedDate": "8 Dec 2023",
+        "Amount": "Free",
+        "SubscribedUsers": "62 Users"
+    },
+    {
+        "Plan": "Professional",
+        "PlanType": "Yearly",
+        "CreateDate": "9 Nov 2023",
+        "ModifiedDate": "8 Dec 2023",
+        "Amount": "$199",
+        "SubscribedUsers": "157 Users"
+    },
+    {
+        "Plan": "Enterprise",
+        "PlanType": "Yearly",
+        "CreateDate": "9 Nov 2023",
+        "ModifiedDate": "8 Dec 2023",
+        "Amount": "$399",
+        "SubscribedUsers": "241 Users"
+    }
+]

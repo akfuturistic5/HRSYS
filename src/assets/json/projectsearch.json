@@ -1,0 +1,43 @@
+[
+    {
+        "projectTitle": "Office Management",
+        "openTasks": 1,
+        "completedTasks": 9,
+        "projectDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...",
+        "deadline": "17 Apr 2023",
+        "projectLeader": "Jeffery Lalor",
+        "progress": 40,
+        "Action" :"more_vert"
+    },
+    {
+        "projectTitle": "Office Management",
+        "openTasks": 2,
+        "completedTasks": 5,
+        "projectDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...",
+        "deadline": "17 Apr 2023",
+        "projectLeader": "Jeffery Lalor",
+        "progress": 40,
+        "Action" :"more_vert"
+    },
+    {
+        "projectTitle": "Office Management",
+        "openTasks": 3,
+        "completedTasks": 3,
+        "projectDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...",
+        "deadline": "17 Apr 2023",
+        "projectLeader": "Jeffery Lalor",
+        "progress": 40,
+        "Action" :"more_vert"
+    },
+    {
+        "projectTitle": "Office Management",
+        "openTasks": 12,
+        "completedTasks": 4,
+        "projectDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...",
+        "deadline": "17 Apr 2023",
+        "projectLeader": "Jeffery Lalor",
+        "progress": 40,
+        "Action" :"more_vert"
+    }
+]
+  

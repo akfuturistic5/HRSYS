@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "Class": "fa-regular fa-file-pdf",
+        "Title": "Sample.pdf",
+        "Filesize": "10.45kb",
+        "LastModified": "1 min ago"
+    },
+    {
+        "id": 2,
+        "Class": "fa-regular fa-file-word",
+        "Title": "Document.docx",
+        "Filesize": "22.67kb",
+        "LastModified": "30 min ago"
+    },
+    {
+        "id": 3,
+        "Class": "fa-regular fa-file-image",
+        "Title": "icon.png",
+        "Filesize": "12.47kb",
+        "LastModified": "1 hour ago"
+    },
+    {
+        "id": 4,
+        "Class": "fa-regular fa-file-excel",
+        "Title": "User.xls",
+        "Filesize": "35.11kb",
+        "LastModified": "23 Jul 6:30 PM"
+    }
+]

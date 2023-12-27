@@ -1,0 +1,32 @@
+[
+    {
+        "Id": "1",
+        "InvoiceNumber": "#INV-0001",
+        "Client": "Global Technologies",
+        "CreatedDate": "11 Mar 2023",
+        "DueDate": "17 Mar 2023",
+        "Amount": "$2099",
+        "Class": "badge bg-inverse-success",
+        "Status": "Paid"
+    },
+    {
+        "Id": "2",
+        "InvoiceNumber": "#INV-0002",
+        "Client": "Delta Infotech",
+        "CreatedDate": "11 Mar 2023",
+        "DueDate": "17 Mar 2023",
+        "Amount": "$2099",
+        "Class": "badge bg-inverse-info",
+        "Status": "Sent"
+    },
+    {
+        "Id": "3",
+        "InvoiceNumber": "#INV-0003",
+        "Client": "Cream Inc",
+        "CreatedDate": "11 Mar 2023",
+        "DueDate": "17 Mar 2023",
+        "Amount": "$2099",
+        "Class": "badge bg-inverse-warning",
+        "Status": "Partially Paid"
+    }
+]

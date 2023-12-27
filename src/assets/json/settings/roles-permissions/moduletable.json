@@ -1,0 +1,14 @@
+[
+    {
+      "ModulePermission": "Employee"
+    },
+    {
+      "ModulePermission": "Holidays"
+    },
+    {
+      "ModulePermission": "Leaves"
+    },
+    {
+      "ModulePermission": "Events"
+    }
+   ]

@@ -1,0 +1,72 @@
+[
+    {
+        "userName": "Lesley Grauer",
+        "userImage": "avatar-01.jpg",
+        "action": " added new task",
+        "time": "4 mins ago",
+        "task": "Hospital Administration",
+        "profile": "profile"
+    },
+    {
+        "userName": "Jeffery Lalor",
+        "userImage": "avatar-16.jpg",
+        "action": " added",
+        "additionalUsers": [
+            {
+                "name": "Loren Gatlin",
+                "profile": "profile"
+            },
+            {
+                "name": "Tarah Shropshire",
+                "profile": "profile"
+            }
+        ],
+        "task": "Patient appointment booking",
+        "time": "6 mins ago",
+        "taskLink": "/tasks/patient-appointment-booking",
+        "subaction": " to project"
+    },
+    {
+        "userName": "Catherine Manseau",
+        "userImage": "avatar-08.jpg",
+        "action": " completed task",
+        "task": "Appointment booking with payment gateway",
+        "time": "12 mins ago",
+        "profile": "profile"
+    },
+    {
+        "userName": "Bernardo Galaviz",
+        "userImage": "avatar-13.jpg",
+        "action": " changed the task name",
+        "task": "Doctor available module",
+        "time": "1 day ago",
+        "profile": "profile"
+    },
+    {
+        "userName": "Mike Litorus",
+        "userImage": "avatar-05.jpg",
+        "action": " added new task",
+        "task": "Patient and Doctor video conferencing",
+        "time": "2 days ago",
+        "profile": "profile"
+    },
+    {
+        "userName": "Jeffery Lalor",
+        "userImage": "avatar-16.jpg",
+        "action": " added",
+        "additionalUsers": [
+            {
+                "name": "Jeffrey Warden",
+                "profile": "profile"
+            },
+            {
+                "name": "Bernardo Galaviz",
+                "profile": "profile"
+            }
+        ],
+        "task": "Private chat module",
+        "time": "7 days ago",
+        "taskLink": "/tasks/private-chat-module",
+        "subaction": " to the task of "
+    }
+]

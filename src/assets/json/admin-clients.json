@@ -1,0 +1,42 @@
+[
+    {   
+        "Image": "avatar-19.jpg",
+        "Name": "Barry Cuda",
+        "Role": "CEO",
+        "Email": "barrycuda@example.com",
+        "Status": "Active",
+        "Class": "fa-regular fa-circle-dot text-success"        
+    },
+    {
+        "Image": "avatar-19.jpg",
+        "Name": "Tressa Wexler",
+        "Role": "Manager",
+        "Email": "tressawexler@example.com",
+        "Status": "Inactive",
+        "Class": "fa-regular fa-circle-dot text-danger"        
+    },
+    {
+        "Image": "avatar-07.jpg",
+        "Name": "Ruby Bartlett",
+        "Role": "CEO",
+        "Email": "rubybartlett@example.com",
+        "Status": "Inactive",
+        "Class": "fa-regular fa-circle-dot text-danger"        
+    },
+    {
+        "Image": "avatar-06.jpg",
+        "Name": "Misty Tison",
+        "Role": "CEO",
+        "Email": "mistytison@example.com",        
+        "Status": "Active",
+        "Class": "fa-regular fa-circle-dot text-success"        
+    },
+    {
+        "Image": "avatar-14.jpg",
+        "Name": "Daniel Deacon",
+        "Role": "CEO",
+        "Email": "danieldeacon@example.com",
+        "Status": "Inactive",
+        "Class": "fa-regular fa-circle-dot text-danger"        
+    }
+]

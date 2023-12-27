@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "Class": "fa-solid fa-briefcase",
+        "Count": "110",
+        "Title": "Jobs"
+    },
+    {
+        "id": 2,
+        "Class": "fa-solid fa-users",
+        "Count": "40",
+        "Title": "Job Seekers"
+    },
+    {
+        "id": 3,
+        "Class": "fa-solid fa-user",
+        "Count": "374",
+        "Title": "Employees"
+    },
+    {
+        "id": 4,
+        "Class": "fa-solid fa-paste",
+        "Count": "220",
+        "Title": "Applications"
+    }
+]

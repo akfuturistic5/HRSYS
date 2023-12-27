@@ -1,0 +1,38 @@
+[
+    {
+        "EstimateId": "EST-0001",
+        "Client": "Global Technologies",
+        "EstimateDate": "11 Mar 2023",
+        "ExpiryDate": "17 Mar 2023",
+        "Amount": "$2099",
+        "Class": "badge bg-inverse-success",
+        "Status": "Accepted"
+    },
+    {
+        "EstimateId": "EST-0002",
+        "Client": "Delta Infotech",
+        "EstimateDate": "11 Mar 2023",
+        "ExpiryDate": "17 Mar 2023",
+        "Amount": "$2099",
+        "Class": "badge bg-inverse-danger",
+        "Status": "Declined"
+    },
+    {
+        "EstimateId": "EST-0003",
+        "Client": "Cream Inc",
+        "EstimateDate": "11 Mar 2023",
+        "ExpiryDate": "17 Mar 2023",
+        "Amount": "$2099",
+        "Class": "badge bg-inverse-info",
+        "Status": "Sent"
+    },
+    {
+        "EstimateId": "EST-0004",
+        "Client": "International Software Inc",
+        "EstimateDate": "11 Mar 2023",
+        "ExpiryDate": "17 Mar 2023",
+        "Amount": "$2099",
+        "Class": "badge bg-inverse-warning",
+        "Status": "Expired"
+    }
+]

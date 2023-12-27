@@ -1,0 +1,37 @@
+[
+    {
+        "Name": "Office Management",
+        "Title": "65%",
+        "Class": "progress-bar w-65",
+        "Open": "1",
+        "num": "9"
+    },
+    {
+        "Name": "Project Management",
+        "Title": "15%", 
+        "Class": "progress-bar w-15",
+        "Open": "2",
+        "num": "5"
+    },
+    {
+        "Name": "Video Calling App",
+        "Title": "50%",
+        "Class": "progress-bar w-50",
+        "Open": "3",
+        "num": "3"
+    },
+    {
+        "Name": "Hospital Administration",
+        "Title": "88%",
+        "Class": "progress-bar w-88",
+        "Open": "12",
+        "num": "4"
+    },
+    {
+        "Name": "Digital Marketplace",
+        "Title": "100%",
+        "Class": "progress-bar w-100",
+        "Open": "7",
+        "num": "14"
+    }
+]

@@ -1,0 +1,79 @@
+[
+    {
+        "Name": "Daniel Porter",
+        "Job": "Admin",
+        "Image": "avatar-02.jpg",
+        "Email": "danielporter@example.com",
+        "Company": "Dreams Technologies",
+        "CreatedDate": "1 Jan 2023",
+        "Role": "Admin",
+        "Action": "more_vert",
+        "class": "badge bg-inverse-danger"
+    },
+    {
+        "Name": "John Doe",
+        "Job": "Web Designer",
+        "Image": "avatar-09.jpg",
+        "Email": "johndoe@example.com",
+        "Company": "Dreams Technologies",
+        "CreatedDate": "1 Jan 2023",
+        "Role": "Employee",
+        "Action": "more_vert",
+        "class": "badge bg-inverse-success"
+    },
+    {
+        "Name": "Richard Miles",
+        "Job": "Admin",
+        "Image": "avatar-11.jpg",
+        "Email": "richardmiles@example.com",
+        "Company": "Dreams Technologies",
+        "CreatedDate": "1 Jan 2023",
+        "Role": "Employee",
+        "Action": "more_vert",
+        "class": "badge bg-inverse-success"
+    },
+    {
+        "Name": "John Smith",
+        "Job": "Android Developer",
+        "Image": "avatar-10.jpg",
+        "Email": "johnsmith@example.com",
+        "Company": "Dreams Technologies",
+        "CreatedDate": "1 Jan 2023",
+        "Role": "Employee",
+        "Action": "more_vert",
+        "class": "badge bg-inverse-success"
+    },
+    {
+        "Name": "Mike Litorus",
+        "Job": "IOS Developer",
+        "Image": "avatar-05.jpg",
+        "Email": "mikelitorus@example.com",
+        "Company": "Dreams Technologies",
+        "CreatedDate": "1 Jan 2023",
+        "Role": "Employee",
+        "Action": "more_vert",
+        "class": "badge bg-inverse-success"
+    },
+    {
+        "Name": "Wilmer Deluna",
+        "Job": "Team Leader",
+        "Image": "avatar-19.jpg",
+        "Email": "wilmerdeluna@example.com",
+        "Company": "Dreams Technologies",
+        "CreatedDate": "1 Jan 2023",
+        "Role": "Employee",
+        "Action": "more_vert",
+        "class": "badge bg-inverse-success"
+    },
+    {
+        "Name": "Barry Cuda",
+        "Job": "Global Technologies",
+        "Image": "avatar-21.jpg",
+        "Email": "barrycuda@example.com",
+        "Company": "Global Technologies",
+        "CreatedDate": "1 Jan 2023",
+        "Role": "Client",
+        "Action": "more_vert",
+        "class": "badge bg-inverse-info"
+    }
+]

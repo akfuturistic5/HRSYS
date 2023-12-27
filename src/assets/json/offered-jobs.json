@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "JobTitle": "Web Developer",
+    "Department": "Development",
+    "JobType": "Full Time",
+    "Class": "fa-regular fa-circle-dot text-danger"
+  },
+  {
+    "id": 2,
+    "JobTitle": "Web Designer",
+    "Department": "Designing",
+    "JobType": "Part Time",
+    "Class": "fa-regular fa-circle-dot text-success"
+  },
+  {
+    "id": 3,
+    "JobTitle": "Android Developer",
+    "Department": "Android",
+    "JobType": "Internship",
+    "Class": "fa-regular fa-circle-dot text-danger"
+  }
+]

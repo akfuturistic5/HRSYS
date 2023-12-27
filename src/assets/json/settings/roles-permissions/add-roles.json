@@ -1,0 +1,51 @@
+[
+    {
+        "Role": "Administrator",
+        "class" :"active"
+    },
+    {
+        "Role": "CEO",
+        "class" :""
+        
+    },
+    {
+        "Role": "Manager",
+        "class" :""
+        
+    },
+    {
+        "Role": "Team Leader",
+        "class" :""
+        
+    },
+    {
+        "Role": "Accountant",
+        "class" :""
+        
+    },
+    {
+        "Role": "Web Developer",
+        "class" :""
+        
+    },
+    {
+        "Role": "Web Designer",
+        "class" :""
+        
+    },
+    {
+        "Role": "HR",
+        "class" :""
+        
+    },
+    {
+        "Role": "UI/UX Developer",
+        "class" :""
+        
+    },
+    {
+        "Role": "SEO Analyst",
+        "class" :""
+        
+    }
+]

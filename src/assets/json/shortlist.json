@@ -1,0 +1,29 @@
+[
+    {
+      "id": 1,
+      "Image": "avatar-02.jpg",
+      "Name": "John Doe",
+      "Role": "Web Designer",
+      "JobTitle": "Web Designer",
+      "Departments": "Department",
+      "Status": "Offered"
+    },
+    {
+      "id": 2,
+      "Image": "avatar-09.jpg",
+      "Name": "Richard Miles",
+      "Role": "Web Developer",
+      "JobTitle": "Web Developer",
+      "Departments": "Department",
+      "Status": "Offered"
+    },
+    {
+      "id": 3,
+      "Image": "avatar-10.jpg",
+      "Name": "John Smith",
+      "Role": "Android Developer",
+      "JobTitle": "Android Developer",
+      "Departments": "Department",
+      "Status": "Offered"
+    }
+]

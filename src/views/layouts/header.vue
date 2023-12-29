@@ -321,7 +321,9 @@
         <div class="dropdown-menu">
           <router-link class="dropdown-item" to="profile">My Profile</router-link>
           <router-link class="dropdown-item" to="settings">Settings</router-link>
-          <router-link class="dropdown-item" to="/">Logout</router-link>
+          <!--<router-link class="dropdown-item" to="/">Logout</router-link> -->
+		  <a href="javascript:void(0)" class="dropdown-item" @click.prevent="logout">Logout</a>
+		  
         </div>
       </li>
     </ul>
@@ -339,7 +341,8 @@
       <div class="dropdown-menu dropdown-menu-right">
         <router-link class="dropdown-item" to="profile">My Profile</router-link>
         <router-link class="dropdown-item" to="settings">Settings</router-link>
-        <router-link class="dropdown-item" to="/">Logout</router-link>
+       <!-- <router-link class="dropdown-item" to="/">Logout</router-link>-->
+		 <a href="javascript:void(0)" class="dropdown-item" @click.prevent="logout">Logout</a>
       </div>
     </div>
     <!-- /Mobile Menu -->
@@ -366,6 +369,12 @@ export default {
     submitForm() {
       this.$router.push("/search");
     },
+	logout: function () {
+      //localStorage.setItem('token','');
+      localStorage.clear();
+      this.$router.push({ name: "login" }).catch((error) => {});
+      return false;
+    }
   },
   mounted() {
     // // Add scroll event listener

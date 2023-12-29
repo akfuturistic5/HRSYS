@@ -151,6 +151,9 @@ export default {
 	  
 	  const formdata = {email: this.model.email,password: this.model.password};
 	  
+	  console.log(formdata);
+	  
+	  
 	  axios.post("/adminlogin", formdata)
           .then( (response) => {
 				

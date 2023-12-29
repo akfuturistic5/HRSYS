@@ -41,6 +41,7 @@
     "vue-feather": "^2.0.0",
     "vue-flag-icon": "^2.1.0",
     "vue-ionicons": "^3.0.5",
+    "vue-loading-overlay": "6.0",
     "vue-multiselect": "^2.1.8",
     "vue-router": "^4.2.5",
     "vue-simple-line": "^1.1.1",

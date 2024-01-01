@@ -14,7 +14,7 @@
         "Development": "Admin",
         "Email": "danielporter@example.com",
         "img":"avatar-02.jpg",
-        "Company": "Dreams Technologies",
+        "Company": "iTensia USA",
         "CreatedDate": "1 Jan 2023",
         "Role": "Admin",
         "Action": "more_vert"
@@ -24,7 +24,7 @@
         "Development": "Web Designer",
         "Email": "johndoe@example.com",
         "img":"avatar-09.jpg",
-        "Company": "Dreams Technologies",
+        "Company": "iTensia USA",
         "CreatedDate": "1 Jan 2023",
         "Role": "Employee",
         "Action": "more_vert"
@@ -34,7 +34,7 @@
         "Development": "Android Developer",
         "Email": "johnsmith@example.com",
         "img":"avatar-10.jpg",
-        "Company": "Dreams Technologies",
+        "Company": "iTensia USA",
         "CreatedDate": "1 Jan 2023",
         "Role": "Employee",
         "Action": "more_vert"
@@ -44,7 +44,7 @@
         "Development": "IOS Developer",
         "Email": "mikelitorus@example.com",
         "img":"avatar-05.jpg",
-        "Company": "Dreams Technologies",
+        "Company": "iTensia USA",
         "CreatedDate": "1 Jan 2023",
         "Role": "Employee",
         "Action": "more_vert"
@@ -54,7 +54,7 @@
         "Development": "Admin",
         "Email": "richardmiles@example.com",
         "img":"avatar-11.jpg",
-        "Company": "Dreams Technologies",
+        "Company": "iTensia USA",
         "CreatedDate": "1 Jan 2023",
         "Role": "Employee",
         "Action": "more_vert"
@@ -64,7 +64,7 @@
         "Development": "Team Leader",
         "Email": "wilmerdeluna@example.com",
         "img":"avatar-19.jpg",
-        "Company": "Dreams Technologies",
+        "Company": "iTensia USA",
         "CreatedDate": "1 Jan 2023",
         "Role": "Employee",
         "Action": "more_vert"

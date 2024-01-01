@@ -22,7 +22,7 @@
                       alt="Logo"
                     />
                     <ul class="list-unstyled mb-0">
-                      <li>Dreams Technologies</li>
+                      <li>iTensia USA</li>
                       <li>3864 Quiet Valley Lane,</li>
                       <li>Sherman Oaks, CA, 91403</li>
                     </ul>

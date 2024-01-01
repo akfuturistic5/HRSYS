@@ -16,7 +16,7 @@
             <div class="showentries mb-3">
               <label
                 >Show
-                <select>
+                <select v-model="pagination.pageSize" @change="updatePerPage">
                   <option value="10">10</option>
                   <option value="25">25</option>
                   <option value="50">50</option>
@@ -30,6 +30,8 @@
                 class="stripped table-hover"
                 :columns="columns"
                 :data-source="data"
+				:pagination="pagination"
+				@change="handleTableChange"
               >
                 <template #bodyCell="{ column, record }">
                   <template v-if="column.key === 'Name'">
@@ -51,6 +53,7 @@
                             href="javascript:;"
                             data-bs-toggle="modal"
                             data-bs-target="#edit_department"
+							@click="EditDept(record)"
                             ><i class="fa-solid fa-pencil m-r-5"></i> Edit</a
                           >
                           <a
@@ -71,71 +74,53 @@
         </div>
       </div>
       <!-- /Page Content -->
-
-      <departments-model></departments-model>
+	
+      <departments-model :form="create_form" :editform="edit_form" @create-department="createDepartment" @update-department="updateDepartment" ref="departmentsmodel" ></departments-model>
+	  
     </div>
     <!-- /Page Wrapper -->
   </div>
 </template>
 
 <script>
+var pagination = {total: 0,
+	    current: 1,
+	    pageSize: 10,};
+
 const columns = [
   {
-    title: "#",
-    dataIndex: "id",
-    sorter: {
-      compare: (a, b) => {
-        a = a.id.toLowerCase();
-        b = b.id.toLowerCase();
-        return a > b ? -1 : b > a ? 1 : 0;
-      },
-    },
+	  title: "#",
+	  dataIndex: "id",
+	  key: "id",
+	  customRender: ({ index }) => {
+		return pagination.current === 1 ? index + 1 : (pagination.current - 1) * pagination.pageSize + (index + 1);
+	  },
   },
   {
     title: "Name",
-    dataIndex: "Name",
-    key: "Name",
-    sorter: {
+    dataIndex: "name",
+    key: "name",
+	
+    /*sorter: {
       compare: (a, b) => {
-        a = a.Name.toLowerCase();
-        b = b.Name.toLowerCase();
+        a = a.name.toLowerCase();
+        b = b.name.toLowerCase();
         return a > b ? -1 : b > a ? 1 : 0;
       },
-    },
+    },*/
   },
   {
     title: "Action",
-    sorter: true,
+    sorter: false,
     key: "action",
     class: "text-end",
   },
 ];
-const data = [
-  {
-    id: "1",
-    Name: "Web Development",
-  },
-  {
-    id: "2",
-    Name: "Application Development",
-  },
-  {
-    id: "3",
-    Name: "IT Management",
-  },
-  {
-    id: "4",
-    Name: "Accounts Management",
-  },
-  {
-    id: "5",
-    Name: "Support Management",
-  },
-  {
-    id: "6",
-    Name: "Marketing",
-  },
-];
+const data = [];
+
+import axios from 'axios';
+import { notification } from "ant-design-vue";
+
 export default {
   data() {
     return {
@@ -145,7 +130,251 @@ export default {
       text1: "Add Department",
       columns,
       data,
+	  perpage: 10,
+	  create_form: { department_name: ''},
+	  edit_form: { },
+	  pagination: pagination
     };
   },
+  methods: {
+	handleTableChange(pagesize){
+		
+		console.log('adad');
+		console.log(pagesize);
+		
+		var params = {
+		   params: { per_page: pagesize.pageSize,page:pagesize.current }
+		};
+		
+		this.loadCommonData(params);
+		
+	},
+	EditDept(record){
+		this.edit_form = Object.assign({}, record);
+	},
+	updateDepartment(formval){
+		var token = window.localStorage.getItem("token");
+	
+		axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+		axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+		
+		let loader = this.$loading.show({
+				// Optional parameters
+				container: this.fullPage ? null : this.$refs.formContainer,
+				canCancel: false
+			});
+			
+		var postform = new FormData();
+		postform.append('department_name',formval.name);
+		
+		axios.put("/departments/"+formval.id, postform)
+          .then( (response) => {
+				
+				
+			  loader.hide();
+			  
+			  notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: 3,
+					style: {
+					  background: "#2ab57d",
+					},
+				});
+
+			 this.$refs.departmentsmodel.closeDialog();
+			 
+			 this.create_form.department_name = '';
+			 
+			 var params = {
+				   params: { per_page: this.pagination.pageSize }
+				};
+				
+			 this.loadCommonData(params);
+					
+		}).catch(error => {
+          
+			 loader.hide();
+			 
+			if(error.response){
+			
+				var response = (error.response);
+					
+				notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: 3,
+					style: {
+					  background: "#fd625e",
+					},
+				});
+				
+			}else{
+				
+				notification.open({
+					message: 'Server Error',
+					placement: "topRight",
+					duration: 3,
+					style: {
+					  background: "#fd625e",
+					},
+				});
+			}
+			
+        });
+		
+	},
+	createDepartment(formval){
+		
+		var token = window.localStorage.getItem("token");
+	
+		axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+		axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+		
+		let loader = this.$loading.show({
+				// Optional parameters
+				container: this.fullPage ? null : this.$refs.formContainer,
+				canCancel: false
+			});
+		
+		axios.post("/departments", formval)
+          .then( (response) => {
+				
+				
+			  loader.hide();
+			  
+			  notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: 3,
+					style: {
+					  background: "#2ab57d",
+					},
+				});
+
+			 this.$refs.departmentsmodel.closeDialog();
+			 
+			 this.create_form.department_name = '';
+			 
+			 var params = {
+				   params: { per_page: this.pagination.pageSize }
+				};
+				
+			 this.loadCommonData(params);
+					
+		}).catch(error => {
+          
+			 loader.hide();
+			 
+			if(error.response){
+			
+				var response = (error.response);
+					
+				notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: 3,
+					style: {
+					  background: "#fd625e",
+					},
+				});
+				
+			}else{
+				
+				notification.open({
+					message: 'Server Error',
+					placement: "topRight",
+					duration: 3,
+					style: {
+					  background: "#fd625e",
+					},
+				});
+			}
+			
+        });
+		
+	},
+	updatePerPage(){
+		console.log(this.pagination.pageSize);
+		var params = {
+          params: { per_page: this.pagination.pageSize }
+        };
+        this.loadCommonData(params);
+		
+	},
+	loadCommonData(params){
+		
+		var token = window.localStorage.getItem("token");
+	
+		axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+		axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+		
+		let loader = this.$loading.show({
+						// Optional parameters
+						container: this.fullPage ? null : this.$refs.formContainer,
+						canCancel: false
+					});
+		
+		axios.get("/departments", params)
+			.then((response) => {
+				
+				console.log(response.data.data);
+				this.pagination.total = response.data.data.total;
+				this.pagination.current = response.data.data.current_page;
+				this.pagination.pageSize = response.data.data.per_page;
+				
+				this.data = response.data.data.data;
+				
+				loader.hide();
+				
+				
+					  
+			}).catch((error) => {
+			  
+			  loader.hide();
+			  
+			  var response = (error.response);
+			  
+			  if(error.response.status == 401 && response.data.message == 'Unauthenticated.'){
+				
+				localStorage.clear();
+				
+				notification.open({
+						message: 'Please Login',
+						placement: "topRight",
+						duration: 3,
+						style: {
+						  background: "#fd625e",
+						},
+					});
+					
+				this.$router.push({name: 'login'}).catch(error => {}) 
+				 
+			  }else{
+				
+				this.errorMessage = error.message;
+				notification.open({
+						message: response.data.message,
+						placement: "topRight",
+						duration: 3,
+						style: {
+						  background: "#fd625e",
+						},
+					});
+				  
+			  }
+			  
+			});
+	}
+  },
+  mounted() {
+	
+	var params = {
+       params: { per_page: this.pagination.pageSize }
+    };
+	
+	this.loadCommonData(params);
+	
+  }
 };
 </script>

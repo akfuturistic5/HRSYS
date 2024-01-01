@@ -21,7 +21,7 @@
                       alt="Logo"
                     />
                     <ul class="list-unstyled">
-                      <li>Dreams Technologies</li>
+                      <li>iTensia USA</li>
                       <li>3864 Quiet Valley Lane,</li>
                       <li>Sherman Oaks, CA, 91403</li>
                       <li>GST No:</li>

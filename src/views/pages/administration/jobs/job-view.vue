@@ -99,7 +99,7 @@
                 <span><i class="fa-solid fa-signs-post"></i></span>
                 <h5>Location</h5>
                 <p>
-                  Dreams Technologies <br />
+                  iTensia USA <br />
                   3864 Quiet Valley Lane, <br />
                   Sherman Oaks, <br />
                   California, 91403

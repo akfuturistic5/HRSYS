@@ -10,22 +10,32 @@
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
+			ref="adddeptclose"
           >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form>
+          <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }">
             <div class="input-block mb-3">
               <label class="col-form-label"
-                >Department Name <span class="text-danger">*</span></label
-              >
-              <input class="form-control" type="text" />
+                >Department Name <span class="text-danger">*</span>
+			  </label>
+              <Field
+                    name="department_name"
+                    type="text"
+                    value=""
+                    class="form-control"
+					v-model="form.department_name"
+					:class="{ 'is-invalid': errors.department_name }"
+                  />
+                  <div class="invalid-feedback">{{ errors.department_name }}</div>
+                  <div class="department_namesshow text-danger" id="department_name"></div>
             </div>
             <div class="submit-section">
               <button class="btn btn-primary submit-btn">Submit</button>
             </div>
-          </form>
+         </Form>
         </div>
       </div>
     </div>
@@ -43,22 +53,32 @@
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
-          >
+			ref="editdeptclose"
+		  >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form>
+          <Form @submit="onUpdate" :validation-schema="editschema" v-slot="{ errors }">
             <div class="input-block mb-3">
-              <label class="col-form-label"
+			  <label class="col-form-label"
                 >Department Name <span class="text-danger">*</span></label
               >
-              <input class="form-control" value="IT Management" type="text" />
+              <Field
+                    name="name"
+                    type="text"
+                    value=""
+                    class="form-control"
+					v-model="editform.name"
+					:class="{ 'is-invalid': errors.name }"
+                  />
+                  <div class="invalid-feedback">{{ errors.name }}</div>
+                  <div class="nameshow text-danger" id="name"></div>
             </div>
             <div class="submit-section">
               <button class="btn btn-primary submit-btn">Save</button>
             </div>
-          </form>
+          </Form>
         </div>
       </div>
     </div>
@@ -97,3 +117,56 @@
   </div>
   <!-- /Delete Department Modal -->
 </template>
+
+
+<script>
+import { Form, Field } from "vee-validate";
+import * as Yup from "yup";
+import axios from 'axios';
+import { notification } from "ant-design-vue";
+
+export default {
+  emits: ["createDepartment","updateDepartment"], // <--- add this line
+  components: {
+    Form,
+    Field,
+  },
+  props: {
+    form: [Array, Object],
+    editform: [Array, Object]
+  },
+  data() {
+    return {};
+  },
+  methods: {
+	onSubmit(values) {
+		this.$emit("create-department",values);
+	},
+	closeDialog(){
+		this.$refs.adddeptclose.click();
+		this.$refs.editdeptclose.click();
+	},
+	onUpdate(values){
+		console.log('Update Called!!');
+		this.$emit("update-department",this.editform);
+	}
+  }, 
+  setup() {
+    const schema = Yup.object().shape({
+      department_name: Yup.string().required("Department Name is required"),
+    });
+	
+	const editschema = Yup.object().shape({
+      name: Yup.string().required("Department Name is required"),
+    });
+	
+    return {
+      schema,
+	  editschema
+    };
+  },
+  beforeMount() {},
+  mounted() {},
+  computed: {}
+};
+</script>

@@ -14,7 +14,7 @@
 
     <!-- Header Title -->
     <div class="page-title-box float-start">
-      <h3>Dreams Technologies</h3>
+      <h3>iTensia USA</h3>
     </div>
     <!-- /Header Title -->
 

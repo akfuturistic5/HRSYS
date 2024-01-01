@@ -10,7 +10,7 @@
           <!-- Account Logo -->
           <div class="account-logo">
             <router-link to="admin-dashboard"
-              ><img src="@/assets/img/logo2.png" alt="Dreams Technologies"
+              ><img src="@/assets/img/logo2.png" alt="iTensia USA"
             /></router-link>
           </div>
           <!-- /Account Logo -->

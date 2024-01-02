@@ -10,32 +10,59 @@
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
+			ref="adddesgclose"
           >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form>
+          <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }">
             <div class="input-block mb-3">
               <label class="col-form-label"
                 >Designation Name <span class="text-danger">*</span></label
               >
-              <input class="form-control" type="text" />
+             <!-- <input class="form-control" type="text" /> -->
+			  
+			  <Field
+                    name="designation_name"
+                    type="text"
+                    value=""
+                    class="form-control"
+					v-model="form.designation_name"
+					:class="{ 'is-invalid': errors.designation_name }"
+                  />
+                  <div class="invalid-feedback">{{ errors.designation_name }}</div>
+                  <div class="designation_nameshow text-danger" id="designation_name"></div>
+				  
             </div>
             <div class="input-block mb-3">
               <label class="col-form-label"
                 >Department <span class="text-danger">*</span></label
               >
-              <vue-select
+			  <Field
+                    name="department"
+                    as="select"
+                    class="form-control"
+					v-model="form.department"
+					:class="{ 'is-invalid': errors.department }"
+                  >
+				  <option value="">Choose Department</option>
+				  <option v-for="department in departmentlist" :key="department.id" :value="department.id">{{ department.name }}</option>
+				  <div class="invalid-feedback">{{ errors.department }}</div>
+                  <div class="departmentshow text-danger" id="department"></div>
+			  </Field>
+              
+			  <!--<vue-select
                 :options="Department"
                 id="marketing"
                 placeholder="Select Department"
-              />
+              /> -->
+			  
             </div>
             <div class="submit-section">
               <button class="btn btn-primary submit-btn">Submit</button>
             </div>
-          </form>
+          </Form>
         </div>
       </div>
     </div>
@@ -119,11 +146,46 @@
 </template>
 
 <script>
+import { Form, Field } from "vee-validate";
+import * as Yup from "yup";
 export default {
+  emits: ["createDesignation"], // <--- add this line
+  components: {
+    Form,
+    Field,
+  },
+  props: {
+    form: [Array, Object],
+    departmentlist: [Array, Object],
+  },
   data() {
     return {
       select2: null,
       Department: ["Select Department", "Web Development", "IT Management", "Marketing"],
+    };
+  },
+  methods: {
+	onSubmit(values) {
+		this.$emit("create-designation",values);
+	},
+	closeDialog(){
+		this.$refs.adddesgclose.click();
+	},
+  },
+  setup() {
+    const schema = Yup.object().shape({
+      designation_name: Yup.string().required("Designation Name is required"),
+	  department: Yup.string().required("Department is required"),
+    });
+	
+	const editschema = Yup.object().shape({
+      name: Yup.string().required("Designation Name is required"),
+	  department: Yup.string().required("Department is required"),
+    });
+	
+    return {
+      schema,
+	  editschema
     };
   },
 };

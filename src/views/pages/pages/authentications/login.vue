@@ -139,6 +139,8 @@ export default {
         this.emailError = "Email is not valid";
       }*/
 	  
+	  
+	  
 	  let loader = this.$loading.show({
                     // Optional parameters
                     container: this.fullPage ? null : this.$refs.formContainer,
@@ -162,9 +164,9 @@ export default {
 			  notification.open({
 					message: "Login Successful",
 					placement: "topRight",
-					duration: 3,
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
 					style: {
-					  background: "#2ab57d",
+					  background: process.env.VUE_APP_SUCCESS_COLOR,
 					},
 				});
 				
@@ -183,9 +185,9 @@ export default {
 				notification.open({
 					message: response.data.message,
 					placement: "topRight",
-					duration: 3,
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
 					style: {
-					  background: "#fd625e",
+					  background: process.env.VUE_APP_WARNING_COLOR,
 					},
 				});
 				
@@ -194,9 +196,9 @@ export default {
 				notification.open({
 					message: 'Server Error',
 					placement: "topRight",
-					duration: 3,
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
 					style: {
-					  background: "#fd625e",
+					  background: process.env.VUE_APP_WARNING_COLOR,
 					},
 				});
 			}

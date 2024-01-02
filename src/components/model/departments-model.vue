@@ -97,7 +97,7 @@
           <div class="modal-btn delete-action">
             <div class="row">
               <div class="col-6">
-                <a href="javascript:void(0);" class="btn btn-primary continue-btn"
+                <a href="javascript:void(0);" class="btn btn-primary continue-btn" @click="deleteDept"
                   >Delete</a
                 >
               </div>
@@ -105,7 +105,7 @@
                 <a
                   href="javascript:void(0);"
                   data-bs-dismiss="modal"
-                  class="btn btn-primary cancel-btn"
+                  class="btn btn-primary cancel-btn" ref="deletedeptclose"
                   >Cancel</a
                 >
               </div>
@@ -126,14 +126,15 @@ import axios from 'axios';
 import { notification } from "ant-design-vue";
 
 export default {
-  emits: ["createDepartment","updateDepartment"], // <--- add this line
+  emits: ["createDepartment","updateDepartment","deleteDepartment"], // <--- add this line
   components: {
     Form,
     Field,
   },
   props: {
     form: [Array, Object],
-    editform: [Array, Object]
+    editform: [Array, Object],
+	deldep_id:[Number,String]
   },
   data() {
     return {};
@@ -145,10 +146,15 @@ export default {
 	closeDialog(){
 		this.$refs.adddeptclose.click();
 		this.$refs.editdeptclose.click();
+		this.$refs.deletedeptclose.click();
 	},
 	onUpdate(values){
 		console.log('Update Called!!');
 		this.$emit("update-department",this.editform);
+	},
+	deleteDept(){
+		console.log('Delete Called');
+		this.$emit("delete-department",this.deldep_id);
 	}
   }, 
   setup() {

@@ -16,7 +16,7 @@
             <div class="showentries mb-3">
               <label
                 >Show
-                <select>
+                <select v-model="pagination.pageSize" @change="updatePerPage">
                   <option value="10">10</option>
                   <option value="25">25</option>
                   <option value="50">50</option>
@@ -71,41 +71,45 @@
         </div>
       </div>
       <!-- /Page Content -->
-      <designation-model></designation-model>
+      <designation-model :form="create_form" :departmentlist="department_list" @create-designation="createDesignation" ref="designationsmodel" ></designation-model>
     </div>
     <!-- /Page Wrapper -->
   </div>
 </template>
 
 <script>
+
+var pagination = {total: 0,
+	    current: 1,
+	    pageSize: 10,};
+		
 const columns = [
   {
     title: "#",
     dataIndex: "id",
-    sorter: {
-      compare: (a, b) => {
-        a = a.id.toLowerCase();
-        b = b.id.toLowerCase();
-        return a > b ? -1 : b > a ? 1 : 0;
-      },
-    },
+	key: "id",
+	customRender: ({ index }) => {
+		return pagination.current === 1 ? index + 1 : (pagination.current - 1) * pagination.pageSize + (index + 1);
+	},
   },
   {
     title: "Designation",
     dataIndex: "name",
     key: "name",
-    sorter: {
+	sorter: false,
+    /*sorter: {
       compare: (a, b) => {
         a = a.name.toLowerCase();
         b = b.name.toLowerCase();
         return a > b ? -1 : b > a ? 1 : 0;
       },
-    },
+    },*/
   },
   {
     title: "Department",
     dataIndex: ["department","name"],
-	sorter: {
+	sorter: false,
+	/*sorter: {
       compare: (a, b) => {
 	  
 	     console.log(a);
@@ -114,11 +118,11 @@ const columns = [
         b = b.department.name.toLowerCase();
         return a > b ? -1 : b > a ? 1 : 0;
       },
-    },
+    },*/
   },
   {
     title: "Action",
-    sorter: true,
+    sorter: false,
     key: "action",
     class: "text-end",
   },
@@ -138,68 +142,217 @@ export default {
       path: "Dashboard",
       text: "Designations",
       text1: "Add Designation",
+	  pagination: pagination,
+	  create_form: { "designation_name": "", "department": "" },
+	  department_list : {},
     };
   },
-  mounted() {
+  methods: {
+	createDesignation(formval){
+		console.log('create designation method called');
+		console.log(formval);
+		
+		var token = window.localStorage.getItem("token");
 	
-	console.log('mount called');
-	
-	var token = window.localStorage.getItem("token");
-	
-	axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
-    axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-	
-    let loader = this.$loading.show({
-                    // Optional parameters
-                    container: this.fullPage ? null : this.$refs.formContainer,
-                    canCancel: false
-                });
-	
-	axios.get("/designations", [])
-        .then((response) => {
-			
-			console.log(response.data.data.data);
-			
-			this.data = response.data.data.data;
-			
-			loader.hide();
-				  
-        }).catch((error) => {
-          
-		  loader.hide();
-		  
-		  var response = (error.response);
-		  
-		  if(error.response.status == 401 && response.data.message == 'Unauthenticated.'){
-			
-			localStorage.clear();
-			
-			notification.open({
-					message: 'Please Login',
+		axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+		axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+		
+		let loader = this.$loading.show({
+				// Optional parameters
+				container: this.fullPage ? null : this.$refs.formContainer,
+				canCancel: false
+			});
+		
+		axios.post("/designations", formval)
+          .then( (response) => {
+				
+				
+			  loader.hide();
+			  
+			  notification.open({
+					message: response.data.message,
 					placement: "topRight",
-					duration: 3,
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
 					style: {
-					  background: "#fd625e",
+					  background: process.env.VUE_APP_SUCCESS_COLOR,
+					},
+				});
+
+			 this.$refs.designationsmodel.closeDialog();
+			 
+			 this.create_form = { "designation_name": "", "department": "" };
+			 
+			 var params = {
+				   params: { per_page: this.pagination.pageSize }
+				};
+				
+			 this.loadCommonData(params);
+					
+		}).catch(error => {
+          
+			 loader.hide();
+			 
+			if(error.response){
+			
+				var response = (error.response);
+					
+				notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_WARNING_COLOR,
 					},
 				});
 				
-			this.$router.push({name: 'login'}).catch(error => {}) 
-			 
-		  }else{
-			
-			this.errorMessage = error.message;
-            notification.open({
-					message: response.data.message,
+			}else{
+				
+				notification.open({
+					message: 'Server Error',
 					placement: "topRight",
-					duration: 3,
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
 					style: {
-					  background: "#fd625e",
+					  background: process.env.VUE_APP_WARNING_COLOR,
 					},
 				});
+			}
+			
+        });
+	},
+	updatePerPage(){
+		console.log(this.pagination.pageSize);
+		var params = {
+          params: { per_page: this.pagination.pageSize }
+        };
+        this.loadCommonData(params);
+		
+	},
+	loadCommonData(params){
+		
+		var token = window.localStorage.getItem("token");
+	
+		axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+		axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+		
+		let loader = this.$loading.show({
+						// Optional parameters
+						container: this.fullPage ? null : this.$refs.formContainer,
+						canCancel: false
+					});
+		
+		axios.get("/designations", params)
+			.then((response) => {
+				
+				console.log(response.data.data);
+				this.pagination.total = response.data.data.total;
+				this.pagination.current = response.data.data.current_page;
+				this.pagination.pageSize = response.data.data.per_page;
+				
+				this.data = response.data.data.data;
+				
+				loader.hide();
+				
+				
+					  
+			}).catch((error) => {
 			  
-		  }
-		  
-        });		
+			  loader.hide();
+			  
+			  var response = (error.response);
+			  
+			  if(error.response.status == 401 && response.data.message == 'Unauthenticated.'){
+				
+				localStorage.clear();
+				
+				notification.open({
+						message: 'Please Login',
+						placement: "topRight",
+						duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+						style: {
+						  background: process.env.VUE_APP_WARNING_COLOR,
+						},
+					});
+					
+				this.$router.push({name: 'login'}).catch(error => {}) 
+				 
+			  }else{
+				
+				this.errorMessage = error.message;
+				notification.open({
+						message: response.data.message,
+						placement: "topRight",
+						duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+						style: {
+						  background: process.env.VUE_APP_WARNING_COLOR,
+						},
+					});
+				  
+			  }
+			  
+			});
+	},
+	loadAllDepartments(params){
+		
+		var token = window.localStorage.getItem("token");
+	
+		axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+		axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+		
+		axios.get("/departments/all", params)
+			.then((response) => {
+				
+				console.log('all departments loaded');
+				console.log(response.data.data);
+				
+				this.department_list = response.data.data;
+					  
+			}).catch((error) => {
+			  
+			  var response = (error.response);
+			  
+			  if(error.response.status == 401 && response.data.message == 'Unauthenticated.'){
+				
+				localStorage.clear();
+				
+				notification.open({
+						message: 'Please Login',
+						placement: "topRight",
+						duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+						style: {
+						  background: process.env.VUE_APP_WARNING_COLOR,
+						},
+					});
+					
+				this.$router.push({name: 'login'}).catch(error => {}) 
+				 
+			  }else{
+				
+				this.errorMessage = error.message;
+				notification.open({
+						message: response.data.message,
+						placement: "topRight",
+						duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+						style: {
+						  background: process.env.VUE_APP_WARNING_COLOR,
+						},
+					});
+				  
+			  }
+			  
+			});
+	}
+  },
+  mounted() {
+	
+	var params = {
+       params: { per_page: this.pagination.pageSize }
+    };
+	
+	this.loadCommonData(params);
+	
+	this.loadAllDepartments([]);
+	
+	console.log('mount called');
 	
   }
 };

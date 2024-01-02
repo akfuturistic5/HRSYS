@@ -61,6 +61,7 @@
                             href="javascript:;"
                             data-bs-toggle="modal"
                             data-bs-target="#delete_department"
+							@click="DeleteDept(record.id)"
                             ><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a
                           >
                         </div>
@@ -75,7 +76,7 @@
       </div>
       <!-- /Page Content -->
 	
-      <departments-model :form="create_form" :editform="edit_form" @create-department="createDepartment" @update-department="updateDepartment" ref="departmentsmodel" ></departments-model>
+      <departments-model :form="create_form" :editform="edit_form" :deldep_id="deldepid" @create-department="createDepartment" @update-department="updateDepartment" @delete-department="deleteDepartment" ref="departmentsmodel" ></departments-model>
 	  
     </div>
     <!-- /Page Wrapper -->
@@ -133,7 +134,8 @@ export default {
 	  perpage: 10,
 	  create_form: { department_name: ''},
 	  edit_form: { },
-	  pagination: pagination
+	  pagination: pagination,
+	  deldepid: 0,
     };
   },
   methods: {
@@ -151,6 +153,78 @@ export default {
 	},
 	EditDept(record){
 		this.edit_form = Object.assign({}, record);
+	},
+	DeleteDept(deptid){
+		this.deldepid = deptid;
+	},
+	deleteDepartment(depid){
+		console.log('Parent Dept Called');
+		console.log(depid);
+		
+		var token = window.localStorage.getItem("token");
+	
+		axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+		axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+		
+		let loader = this.$loading.show({
+				// Optional parameters
+				container: this.fullPage ? null : this.$refs.formContainer,
+				canCancel: false
+			});
+		
+		axios.delete("/departments/"+depid, [])
+          .then( (response) => {
+				
+			 loader.hide();
+			  
+			  notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_SUCCESS_COLOR,
+					},
+				});
+
+			 this.$refs.departmentsmodel.closeDialog();
+			 
+			 var params = {
+				   params: { per_page: this.pagination.pageSize }
+				};
+				
+			 this.loadCommonData(params);
+					
+		}).catch(error => {
+          
+			 loader.hide();
+			 
+			if(error.response){
+			
+				var response = (error.response);
+					
+				notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_WARNING_COLOR,
+					},
+				});
+				
+			}else{
+				
+				notification.open({
+					message: 'Server Error',
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_WARNING_COLOR,
+					},
+				});
+			}
+			
+        });
+		
 	},
 	updateDepartment(formval){
 		var token = window.localStorage.getItem("token");
@@ -176,9 +250,9 @@ export default {
 			  notification.open({
 					message: response.data.message,
 					placement: "topRight",
-					duration: 3,
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
 					style: {
-					  background: "#2ab57d",
+					  background: process.env.VUE_APP_SUCCESS_COLOR,
 					},
 				});
 
@@ -203,9 +277,9 @@ export default {
 				notification.open({
 					message: response.data.message,
 					placement: "topRight",
-					duration: 3,
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
 					style: {
-					  background: "#fd625e",
+					  background: process.env.VUE_APP_WARNING_COLOR,
 					},
 				});
 				
@@ -214,9 +288,9 @@ export default {
 				notification.open({
 					message: 'Server Error',
 					placement: "topRight",
-					duration: 3,
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
 					style: {
-					  background: "#fd625e",
+					  background: process.env.VUE_APP_WARNING_COLOR,
 					},
 				});
 			}
@@ -246,9 +320,9 @@ export default {
 			  notification.open({
 					message: response.data.message,
 					placement: "topRight",
-					duration: 3,
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
 					style: {
-					  background: "#2ab57d",
+					  background: process.env.VUE_APP_SUCCESS_COLOR,
 					},
 				});
 
@@ -273,9 +347,9 @@ export default {
 				notification.open({
 					message: response.data.message,
 					placement: "topRight",
-					duration: 3,
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
 					style: {
-					  background: "#fd625e",
+					  background: process.env.VUE_APP_WARNING_COLOR,
 					},
 				});
 				
@@ -284,9 +358,9 @@ export default {
 				notification.open({
 					message: 'Server Error',
 					placement: "topRight",
-					duration: 3,
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
 					style: {
-					  background: "#fd625e",
+					  background: process.env.VUE_APP_WARNING_COLOR,
 					},
 				});
 			}
@@ -342,9 +416,9 @@ export default {
 				notification.open({
 						message: 'Please Login',
 						placement: "topRight",
-						duration: 3,
+						duration: process.env.VUE_APP_NOTIFICATION_DURATION,
 						style: {
-						  background: "#fd625e",
+						  background: process.env.VUE_APP_WARNING_COLOR,
 						},
 					});
 					
@@ -356,9 +430,9 @@ export default {
 				notification.open({
 						message: response.data.message,
 						placement: "topRight",
-						duration: 3,
+						duration: process.env.VUE_APP_NOTIFICATION_DURATION,
 						style: {
-						  background: "#fd625e",
+						  background: process.env.VUE_APP_WARNING_COLOR,
 						},
 					});
 				  
@@ -374,6 +448,7 @@ export default {
     };
 	
 	this.loadCommonData(params);
+	
 	
   }
 };

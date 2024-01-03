@@ -51,6 +51,7 @@
                             href="javascript:;"
                             data-bs-toggle="modal"
                             data-bs-target="#edit_designation"
+							@click="EditDesignation(record)"
                             ><i class="fa-solid fa-pencil m-r-5"></i> Edit</a
                           >
                           <a
@@ -58,6 +59,7 @@
                             href="javascript:;"
                             data-bs-toggle="modal"
                             data-bs-target="#delete_designation"
+							@click="DeleteDes(record.id)"
                             ><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a
                           >
                         </div>
@@ -69,9 +71,10 @@
             </div>
           </div>
         </div>
+		
       </div>
       <!-- /Page Content -->
-      <designation-model :form="create_form" :departmentlist="department_list" @create-designation="createDesignation" ref="designationsmodel" ></designation-model>
+      <designation-model :form="create_form" :editform="edit_form" :departmentlist="department_list" @create-designation="createDesignation" @update-designation="updateDesignation" @delete-designation="deleteDesignation" :deldes_id="deldesid" ref="designationsmodel" ></designation-model>
     </div>
     <!-- /Page Wrapper -->
   </div>
@@ -145,9 +148,159 @@ export default {
 	  pagination: pagination,
 	  create_form: { "designation_name": "", "department": "" },
 	  department_list : {},
+	  edit_form: {},
+	  deldesid: 0,
     };
   },
   methods: {
+	deleteDesignation(depid){
+		console.log('Parent Dept Called');
+		console.log(depid);
+		
+		var token = window.localStorage.getItem("token");
+	
+		axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+		axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+		
+		let loader = this.$loading.show({
+				// Optional parameters
+				container: this.fullPage ? null : this.$refs.formContainer,
+				canCancel: false
+			});
+		
+		axios.delete("/designations/"+depid, [])
+          .then( (response) => {
+				
+			 loader.hide();
+			  
+			  notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_SUCCESS_COLOR,
+					},
+				});
+
+			 this.$refs.designationsmodel.closeDialog();
+			 
+			 var params = {
+				   params: { per_page: this.pagination.pageSize }
+				};
+				
+			 this.loadCommonData(params);
+					
+		}).catch(error => {
+          
+			 loader.hide();
+			 
+			if(error.response){
+			
+				var response = (error.response);
+					
+				notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_WARNING_COLOR,
+					},
+				});
+				
+			}else{
+				
+				notification.open({
+					message: 'Server Error',
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_WARNING_COLOR,
+					},
+				});
+			}
+			
+        });
+		
+	},
+	DeleteDes(desid){
+		this.deldesid = desid;
+	},
+	updateDesignation(formval){
+		
+		//console.log(formval.department_id);
+		
+		var token = window.localStorage.getItem("token");
+	
+		axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+		axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+		
+		let loader = this.$loading.show({
+				// Optional parameters
+				container: this.fullPage ? null : this.$refs.formContainer,
+				canCancel: false
+			});
+			
+		var postform = new FormData();
+		postform.append('designation_name',formval.name);
+		postform.append('department',formval.department_id);
+		
+		axios.put("/designations/"+formval.id, postform)
+          .then( (response) => {
+				
+			  loader.hide();
+			  
+			  notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_SUCCESS_COLOR,
+					},
+				});
+
+			 this.$refs.designationsmodel.closeDialog();
+			 this.edit_form ={};
+			 
+			 var params = {
+				   params: { per_page: this.pagination.pageSize }
+				};
+				
+			 this.loadCommonData(params);
+					
+		}).catch(error => {
+          
+			 loader.hide();
+			 
+			if(error.response){
+			
+				var response = (error.response);
+					
+				notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_WARNING_COLOR,
+					},
+				});
+				
+			}else{
+				
+				notification.open({
+					message: 'Server Error',
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_WARNING_COLOR,
+					},
+				});
+			}
+			
+        });
+	},
+    EditDesignation(record){
+		this.edit_form = Object.assign({}, record);
+	},
 	createDesignation(formval){
 		console.log('create designation method called');
 		console.log(formval);

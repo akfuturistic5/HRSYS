@@ -41,7 +41,7 @@
         <!-- /Leave Statistics -->
 
         <!-- Search Filter -->
-        <leaves-search-filter></leaves-search-filter>
+        <!-- <leaves-search-filter></leaves-search-filter> -->
         <!-- /Search Filter -->
 
         <div class="row">
@@ -67,13 +67,14 @@
                 <template #bodyCell="{ column, record }">
                   <template v-if="column.key === 'Employee'">
                     <h2 class="table-avatar">
+					  <!--
                       <router-link to="profile" class="avatar"
                         ><img
                           :src="require(`@/assets/img/profiles/${record.Image}`)"
                           alt="User Image"
-                      /></router-link>
+                      /></router-link> -->
                       <a href="javascript:;"
-                        >{{ record.Employee }} <span>{{ record.Role }}</span></a
+                        >{{ record.employee.name }} <span>{{ record.Role }}</span></a
                       >
                     </h2>
                   </template>
@@ -86,7 +87,7 @@
                           data-bs-toggle="dropdown"
                           aria-expanded="false"
                         >
-                          <i :class="record.Class"></i> {{ record.Status }}
+                          <i :class="record.Class"></i> {{ record.status }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                           <a class="dropdown-item" href="javascript:;"
@@ -155,53 +156,32 @@
 </template>
 
 <script>
+
+var pagination = {total: 0,current: 1,pageSize: 10};
+
 const columns = [
   {
     title: "Employee",
     dataIndex: "Employee",
     key: "Employee",
-    sorter: {
-      compare: (a, b) => {
-        a = a.Employee.toLowerCase();
-        b = b.Employee.toLowerCase();
-        return a > b ? -1 : b > a ? 1 : 0;
-      },
-    },
+    sorter: false,
   },
   {
     title: "Leave Type",
-    dataIndex: "LeaveType",
-    sorter: {
-      compare: (a, b) => {
-        a = a.LeaveType.toLowerCase();
-        b = b.LeaveType.toLowerCase();
-        return a > b ? -1 : b > a ? 1 : 0;
-      },
-    },
+    dataIndex: ["leave_type","type"],
+    sorter: false,
   },
   {
     title: "From",
-    dataIndex: "From",
-    sorter: {
-      compare: (a, b) => {
-        a = a.From.toLowerCase();
-        b = b.From.toLowerCase();
-        return a > b ? -1 : b > a ? 1 : 0;
-      },
-    },
+    dataIndex: "from",
+    sorter: false,
   },
   {
     title: "To",
-    dataIndex: "To",
-    sorter: {
-      compare: (a, b) => {
-        a = a.To.toLowerCase();
-        b = b.To.toLowerCase();
-        return a > b ? -1 : b > a ? 1 : 0;
-      },
-    },
+    dataIndex: "to",
+    sorter: false,
   },
-  {
+  /*{
     title: "No of Days",
     dataIndex: "NoofDays",
     sorter: {
@@ -211,29 +191,17 @@ const columns = [
         return a > b ? -1 : b > a ? 1 : 0;
       },
     },
-  },
+  },*/
   {
     title: "Reason",
-    dataIndex: "Reason",
-    sorter: {
-      compare: (a, b) => {
-        a = a.Reason.toLowerCase();
-        b = b.Reason.toLowerCase();
-        return a > b ? -1 : b > a ? 1 : 0;
-      },
-    },
+    dataIndex: "reason",
+    sorter: false,
   },
   {
     title: "Status",
-    dataIndex: "Status",
+    dataIndex: "status",
     key: "Status",
-    sorter: {
-      compare: (a, b) => {
-        a = a.Status.toLowerCase();
-        b = b.Status.toLowerCase();
-        return a > b ? -1 : b > a ? 1 : 0;
-      },
-    },
+    sorter: false,
   },
   {
     title: "Action",
@@ -244,7 +212,7 @@ const columns = [
 ];
 
 const data = [
-  {
+ /* {
     Image: "avatar-09.jpg",
     Employee: "Richard Miles",
     Role: "Web Developer",
@@ -387,8 +355,11 @@ const data = [
     Reason: "Going to Hospital",
     Status: "New",
     Class: "fa-regular fa-circle-dot text-purple",
-  },
+  },*/
 ];
+
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -398,7 +369,82 @@ export default {
       path: "Dashboard",
       text: "Leaves",
       text1: "Add Leave",
+	  pagination: pagination,
     };
   },
+  methods: {		
+	loadCommonData(params){
+		
+		var token = window.localStorage.getItem("token");
+	
+		axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+		axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+		
+		let loader = this.$loading.show({
+						// Optional parameters
+						container: this.fullPage ? null : this.$refs.formContainer,
+						canCancel: false
+					});
+		
+		axios.get("/leaves", params)
+			.then((response) => {
+				
+				console.log(response.data.data);
+				this.pagination.total = response.data.data.total;
+				this.pagination.current = response.data.data.current_page;
+				this.pagination.pageSize = response.data.data.per_page;
+				
+				this.data = response.data.data.data;
+				
+				loader.hide();
+				
+				
+					  
+			}).catch((error) => {
+			  
+			  loader.hide();
+			  
+			  /*var response = (error.response);
+			  
+			  if(error.response.status == 401 && response.data.message == 'Unauthenticated.'){
+				
+				localStorage.clear();
+				
+				notification.open({
+						message: 'Please Login',
+						placement: "topRight",
+						duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+						style: {
+						  background: process.env.VUE_APP_WARNING_COLOR,
+						},
+					});
+					
+				this.$router.push({name: 'login'}).catch(error => {}) 
+				 
+			  }else{
+				
+				this.errorMessage = error.message;
+				notification.open({
+						message: response.data.message,
+						placement: "topRight",
+						duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+						style: {
+						  background: process.env.VUE_APP_WARNING_COLOR,
+						},
+					});
+				  
+			  }*/
+			  
+			});
+	},
+  },
+  mounted() {
+	
+	var params = {
+       params: { per_page: this.pagination.pageSize }
+    };	
+	this.loadCommonData(params);
+	
+  }
 };
 </script>

@@ -53,6 +53,7 @@
                             href="javascript:;"
                             data-bs-toggle="modal"
                             data-bs-target="#edit_holiday"
+							@click="EditHoliday(record)"
                             ><i class="fa-solid fa-pencil m-r-5"></i> Edit</a
                           >
                           <a
@@ -60,12 +61,49 @@
                             href="javascript:;"
                             data-bs-toggle="modal"
                             data-bs-target="#delete_holiday"
+							@click="DeleteHoli(record.id)"
                             ><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a
                           >
                         </div>
                       </div>
                     </div>
                   </template>
+				  <!--<template v-else-if="column.key === 'status'">
+                    <div class="text-left">
+                      <div class="dropdown action-label">
+                        <a
+                          class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                          href="javascript:;"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+						  
+						  v-if="record.completed == 1"
+                        >
+                          <i :class="record.Class"></i> Completed
+                        </a>
+						<a
+                          class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                          href="javascript:;"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+						  
+						  v-if="record.completed == 0"
+                        >
+                          <i :class="record.Class"></i> Pending
+                        </a>
+						
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a class="dropdown-item" href="javascript:;"
+                            ><i class="fa-regular fa-circle-dot text-purple"></i> Completed</a
+                          >
+                          <a class="dropdown-item" href="javascript:;"
+                            ><i class="fa-regular fa-circle-dot text-info"></i> Pending</a
+                          >
+                         
+                        </div>
+                      </div>
+                    </div>
+                  </template>-->
                 </template>
               </a-table>
             </div>
@@ -162,7 +200,7 @@
       </div>
       <!-- /Page Content -->
 
-      <holiday-model></holiday-model>
+      <holiday-model :form="create_form" @create-holiday="createHoliday" @update-holiday="updateHoliday" :editform="edit_form" :holiday_id="holidayid" @delete-holiday="deleteHoliday" ref="holidaysmodel" ></holiday-model>
     </div>
     <!-- /Page Wrapper -->
   </div>
@@ -221,6 +259,9 @@ import inboxHeader from "@/components/breadcrumb/inbox-header.vue";
 
 import axios from 'axios';
 import { notification } from "ant-design-vue";
+import moment from 'moment';
+import { ref } from "vue";
+const currentDate = ref(new Date());
 
 export default {
   components: { inboxHeader },
@@ -233,10 +274,246 @@ export default {
       text1: "Add Holiday",
 	  pagination: pagination,
 	  columns,
-	  data
+	  data,
+	  create_form: { "name": "", "holiday_date": currentDate, "end_date" :currentDate},
+	  edit_form: {},
+	  holidayid:0,
     };
   },
   methods: {
+	deleteHoliday(holidayid){
+		console.log('Parent Called');
+		console.log(holidayid);
+		
+		var token = window.localStorage.getItem("token");
+	
+		axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+		axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+		
+		let loader = this.$loading.show({
+				// Optional parameters
+				container: this.fullPage ? null : this.$refs.formContainer,
+				canCancel: false
+			});
+		
+		axios.delete("/holidays/"+holidayid, [])
+          .then( (response) => {
+				
+			 loader.hide();
+			  
+			  notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_SUCCESS_COLOR,
+					},
+				});
+
+			 this.$refs.holidaysmodel.closeDialog();
+			 
+			 var params = {
+				   params: { per_page: this.pagination.pageSize }
+				};
+				
+			 this.loadCommonData(params);
+					
+		}).catch(error => {
+          
+			 loader.hide();
+			 
+			if(error.response){
+			
+				var response = (error.response);
+					
+				notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_WARNING_COLOR,
+					},
+				});
+				
+			}else{
+				
+				notification.open({
+					message: 'Server Error',
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_WARNING_COLOR,
+					},
+				});
+			}
+			
+        });
+		
+	},
+	DeleteHoli(holidayid){
+		this.holidayid = holidayid;
+	},
+	updateHoliday(formval){
+		
+		console.log(formval);
+		
+		var token = window.localStorage.getItem("token");
+	
+		axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+		axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+		
+		let loader = this.$loading.show({
+				// Optional parameters
+				container: this.fullPage ? null : this.$refs.formContainer,
+				canCancel: false
+			});
+			
+		var postform = new FormData();
+		postform.append('name',formval.name);
+		postform.append('holiday_date',moment(formval.holiday_date).format('YYYY-MM-DD'));
+		postform.append('end_date',moment(formval.end_date).format('YYYY-MM-DD'));
+		
+		axios.put("/holidays/"+formval.id, postform)
+          .then( (response) => {
+				
+			  loader.hide();
+			  
+			  notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_SUCCESS_COLOR,
+					},
+				});
+
+			 this.$refs.holidaysmodel.closeDialog();
+			 this.edit_form ={};
+			 
+			 var params = {
+				   params: { per_page: this.pagination.pageSize }
+				};
+				
+			 this.loadCommonData(params);
+					
+		}).catch(error => {
+          
+			 loader.hide();
+			 
+			if(error.response){
+			
+				var response = (error.response);
+					
+				notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_WARNING_COLOR,
+					},
+				});
+				
+			}else{
+				
+				notification.open({
+					message: 'Server Error',
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_WARNING_COLOR,
+					},
+				});
+			}
+			
+        });
+		
+	},
+	EditHoliday(record){
+		
+		//this.edit_form = Object.assign({}, record);
+		
+		var editobj = Object.assign({}, record);
+		
+		if(editobj.holiday_date != ""){
+			editobj.holiday_date = new Date(editobj.holiday_date);
+		}
+		
+		if(editobj.end_date != ""){
+			editobj.end_date = new Date(editobj.end_date);
+		}
+		
+		this.edit_form = editobj;
+		
+	},
+	createHoliday(formval){
+		console.log('create holiday called!!..');
+		
+		var token = window.localStorage.getItem("token");
+	
+		axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+		axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+		
+		let loader = this.$loading.show({
+				// Optional parameters
+				container: this.fullPage ? null : this.$refs.formContainer,
+				canCancel: false
+			});
+		
+		axios.post("/holidays", formval)
+          .then( (response) => {
+				
+			  loader.hide();
+			  
+			  notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_SUCCESS_COLOR,
+					},
+				});
+
+			 this.$refs.holidaysmodel.closeDialog();
+			 
+			 this.create_form =  { "name": "", "holiday_date": currentDate, "end_date" :currentDate};
+			 
+			 var params = {
+				   params: { per_page: this.pagination.pageSize }
+				};
+				
+			 this.loadCommonData(params);
+					
+		}).catch(error => {
+          
+			 loader.hide();
+			 
+			if(error.response){
+			
+				var response = (error.response);
+					
+				notification.open({
+					message: response.data.message,
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_WARNING_COLOR,
+					},
+				});
+				
+			}else{
+				
+				notification.open({
+					message: 'Server Error',
+					placement: "topRight",
+					duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+					style: {
+					  background: process.env.VUE_APP_WARNING_COLOR,
+					},
+				});
+			}
+			
+        });
+	},
 	handleTableChange(pagesize){
 		
 		console.log('adad');

@@ -15,16 +15,29 @@
           </button>
         </div>
         <div class="modal-body">
-          <form>
+          <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }">
             <div class="input-block mb-3">
               <label class="col-form-label"
                 >Leave Type <span class="text-danger">*</span></label
               >
+			  <Field
+                    name="leave_type_id"
+                    as="select"
+                    class="form-control"
+					v-model="form.leave_type_id"
+					:class="{ 'is-invalid': errors.leave_type_id }"
+                  >
+				  <option value="">Select Leave Type</option>
+				  <option v-for="leavetype in leavetypelist" :key="leavetype.id" :value="leavetype.id">{{ leavetype.type }}</option>
+				  <div class="invalid-feedback">{{ errors.leave_type_id }}</div>
+                  <div class="leave_type_idshow text-danger" id="leave_type_id"></div>
+			  </Field>
+			  <!--
               <vue-select
                 :options="SelectType"
                 id="medical-leave"
                 placeholder="Select Leave Type"
-              />
+              /> -->
             </div>
             <div class="input-block mb-3">
               <label class="col-form-label"
@@ -32,7 +45,7 @@
               >
               <div class="cal-icon">
                 <datepicker
-                  v-model="startdate"
+                  v-model="form.from"
                   class="form-control datetimepicker"
                   :editable="true"
                   :clearable="false"
@@ -73,7 +86,7 @@
             <div class="submit-section">
               <button class="btn btn-primary submit-btn">Submit</button>
             </div>
-          </form>
+          </Form>
         </div>
       </div>
     </div>
@@ -232,7 +245,19 @@
 import { ref } from "vue";
 const currentDate = ref(new Date());
 const currentDateOne = ref(new Date());
+
+import { Form, Field } from "vee-validate";
+import * as Yup from "yup";
+
 export default {
+  components: {
+    Form,
+    Field,
+  },
+  props: {
+    form: [Array, Object],
+	leavetypelist: [Array, Object],
+  },  
   data() {
     return {
       select2: null,
@@ -247,6 +272,20 @@ export default {
       dateFormat: 'dd-MM-yyyy',
       startdateone: currentDateOne,
     };
+  },
+  methods: {
+	onSubmit(values) {
+		this.$emit("create-leave",values);
+	},	
+  },
+  setup() {
+    const schema = Yup.object().shape({
+      leave_type_id: Yup.string().required("Leave Type is required"),
+	});
+	
+	return {
+      schema,
+	};
   },
 };
 </script>

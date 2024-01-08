@@ -149,7 +149,7 @@
       </div>
       <!-- /Page Content -->
 
-      <leaves-admin-model></leaves-admin-model>
+      <leaves-admin-model :form="create_form" :leavetypelist="leavetype_list"></leaves-admin-model>
     </div>
     <!-- /Page Wrapper -->
   </div>
@@ -212,153 +212,11 @@ const columns = [
 ];
 
 const data = [
- /* {
-    Image: "avatar-09.jpg",
-    Employee: "Richard Miles",
-    Role: "Web Developer",
-    LeaveType: "Casual Leave",
-    From: "8 Mar 2023",
-    To: "9 Mar 2023",
-    NoofDays: "2 days",
-    Reason: "Going to Hospital",
-    Status: "Approved",
-    Class: "fa-regular fa-circle-dot text-success",
-  },
-  {
-    Image: "avatar-02.jpg",
-    Employee: "John Doe",
-    Role: "Web Designer",
-    LeaveType: "Medical Leave",
-    From: "27 Feb 2023",
-    To: "27 Feb 2023",
-    NoofDays: "1 day",
-    Reason: "Going to Hospital",
-    Status: "Approved",
-    Class: "fa-regular fa-circle-dot text-success",
-  },
-  {
-    Image: "avatar-10.jpg",
-    Employee: "John Smith",
-    Role: "Android Developer",
-    LeaveType: "LOP",
-    From: "24 Feb 2023",
-    To: "25 Feb 2023",
-    NoofDays: "2 days",
-    Reason: "Personnal",
-    Status: "Approved",
-    Class: "fa-regular fa-circle-dot text-success",
-  },
-  {
-    Image: "avatar-05.jpg",
-    Employee: "Mike Litorus",
-    Role: "IOS Developer",
-    LeaveType: "Paternity Leave",
-    From: "13 Feb 2023",
-    To: "17 Feb 2023",
-    NoofDays: "5 days",
-    Reason: "Going to Hospital",
-    Status: "Approved",
-    Class: "fa-regular fa-circle-dot text-success",
-  },
-  {
-    Image: "avatar-24.jpg",
-    Employee: "Richard Parker",
-    Role: "Web Developer",
-    LeaveType: "Casual Leave",
-    From: "30 Jan 2023",
-    To: "31 Jan 2023",
-    NoofDays: "2 days",
-    Reason: "Going to Hospital",
-    Status: "Approved",
-    Class: "fa-regular fa-circle-dot text-success",
-  },
-  {
-    Image: "avatar-08.jpg",
-    Employee: "Catherine Manseau",
-    Role: "Web Developer",
-    LeaveType: "Maternity Leave",
-    From: "5 Jan 2023",
-    To: "15 Jan 2023",
-    NoofDays: "10 days",
-    Reason: "Going to Hospital",
-    Status: "Approved",
-    Class: "fa-regular fa-circle-dot text-success",
-  },
-  {
-    Image: "avatar-15.jpg",
-    Employee: "Buster Wigton",
-    Role: "Web Developer",
-    LeaveType: "Hospitalisation",
-    From: "15 Jan 2023",
-    To: "25 Jan 2023",
-    NoofDays: "10 days",
-    Reason: "Going to Hospital",
-    Status: "Declined",
-    Class: "fa-regular fa-circle-dot text-danger",
-  },
-  {
-    Image: "avatar-20.jpg",
-    Employee: "Melita Faucher",
-    Role: "Web Developer",
-    LeaveType: "Casual Leave",
-    From: "13 Jan 2023",
-    To: "14 Jan 2023",
-    NoofDays: "2 days",
-    Reason: "Going to Hospital",
-    Status: "Declined",
-    Class: "fa-regular fa-circle-dot text-danger",
-  },
-  {
-    Image: "avatar-03.jpg",
-    Employee: "Tarah Shropshire",
-    Role: "Web Developer",
-    LeaveType: "Casual Leave",
-    From: "10 Jan 2023",
-    To: "10 Jan 2023",
-    NoofDays: "1 day",
-    Reason: "Going to Hospital",
-    Status: "New",
-    Class: "fa-regular fa-circle-dot text-purple",
-  },
-  {
-    Image: "avatar-20.jpg",
-    Employee: "Domenic Houston",
-    Role: "Web Developer",
-    LeaveType: "Casual Leave",
-    From: "10 Jan 2023",
-    To: "11 Jan 2023",
-    NoofDays: "2 days",
-    Reason: "Going to Hospital",
-    Status: "New",
-    Class: "fa-regular fa-circle-dot text-purple",
-  },
-  {
-    Image: "avatar-02.jpg",
-    Employee: "John Doe",
-    Role: "Web Designer",
-    LeaveType: "Casual Leave",
-    From: "9 Jan 2023",
-    To: "10 Jan 2023",
-    NoofDays: "2 days",
-    Reason: "Going to Hospital",
-    Status: "Declined",
-    Class: "fa-regular fa-circle-dot text-danger",
-  },
-  {
-    Image: "avatar-25.jpg",
-    Employee: "Rolland Webber",
-    Role: "Web Developer",
-    LeaveType: "Casual Leave",
-    From: "7 Jan 2023",
-    To: "8 Jan 2023",
-    NoofDays: "2 days",
-    Reason: "Going to Hospital",
-    Status: "New",
-    Class: "fa-regular fa-circle-dot text-purple",
-  },*/
+ 
 ];
 
 import axios from 'axios';
+import { notification } from "ant-design-vue";
 
 export default {
   data() {
@@ -370,9 +228,62 @@ export default {
       text: "Leaves",
       text1: "Add Leave",
 	  pagination: pagination,
+	  create_form: { "leave_type_id": "", "department": "" },
+	  leavetype_list: {}
     };
   },
-  methods: {		
+  methods: {
+	loadAllLeaveTypes(params){
+		
+		var token = window.localStorage.getItem("token");
+	
+		axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+		axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+		
+		axios.get("/leavetypes/all", params)
+			.then((response) => {
+				
+				console.log('all departments loaded');
+				console.log(response.data.data);
+				
+				this.leavetype_list = response.data.data;
+					  
+			}).catch((error) => {
+			  
+			  var response = (error.response);
+			  
+			  if(error.response.status == 401 && response.data.message == 'Unauthenticated.'){
+				
+				localStorage.clear();
+				
+				notification.open({
+						message: 'Please Login',
+						placement: "topRight",
+						duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+						style: {
+						  background: process.env.VUE_APP_WARNING_COLOR,
+						},
+					});
+					
+				this.$router.push({name: 'login'}).catch(error => {}) 
+				 
+			  }else{
+				
+				this.errorMessage = error.message;
+				notification.open({
+						message: response.data.message,
+						placement: "topRight",
+						duration: process.env.VUE_APP_NOTIFICATION_DURATION,
+						style: {
+						  background: process.env.VUE_APP_WARNING_COLOR,
+						},
+					});
+				  
+			  }
+			  
+			});
+			
+	},
 	loadCommonData(params){
 		
 		var token = window.localStorage.getItem("token");
@@ -404,7 +315,7 @@ export default {
 			  
 			  loader.hide();
 			  
-			  /*var response = (error.response);
+			  var response = (error.response);
 			  
 			  if(error.response.status == 401 && response.data.message == 'Unauthenticated.'){
 				
@@ -433,7 +344,7 @@ export default {
 						},
 					});
 				  
-			  }*/
+			  }
 			  
 			});
 	},
@@ -444,6 +355,8 @@ export default {
        params: { per_page: this.pagination.pageSize }
     };	
 	this.loadCommonData(params);
+	
+	this.loadAllLeaveTypes([]);
 	
   }
 };

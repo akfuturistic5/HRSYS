@@ -503,8 +503,8 @@ app.component('SummernoteEditor', SummernoteEditor)
 
 import axios from "axios";
 
-//axios.defaults.baseURL = "https://dev.peoplekrafthr.com/api";
-axios.defaults.baseURL = "http://localhost/HRSYSCODE/api";
+axios.defaults.baseURL = "https://dev.peoplekrafthr.com/api";
+//axios.defaults.baseURL = "http://localhost/HRSYSCODE/api";
 axios.defaults.headers["content-type"] = "application/json";
 //axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
